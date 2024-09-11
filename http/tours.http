@@ -1,0 +1,41 @@
+
+### Create Tour
+POST /api/v1/tours
+@host: 127.0.0.1
+@port: 3000
+Content-type: application/json
+
+{
+	"name": "River and mountain",
+	"duration": 6,
+	"difficulty": "easy",
+	"price": 450
+}
+
+### Get All Tours 
+GET /api/v1/tours
+@host: 127.0.0.1
+@port: 3000
+
+### Get tour By Id
+GET /api/v1/tours/23
+@host: 127.0.0.1
+@port: 3000
+
+### Update Tour
+PATCH /api/v1/tours/1
+@host: 127.0.0.1
+@port: 3000
+Content-type: application/json
+
+{
+	"name": "mountain",
+	"duration": 6,
+	"difficulty": "easy",
+	"price": 450
+}
+
+### Delete Tour
+DELETE /api/v1/tours/8
+@host: 127.0.0.1
+@port: 3000
