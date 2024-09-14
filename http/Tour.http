@@ -1,0 +1,57 @@
+
+### Create Tour
+POST /api/v1/tours
+@host: 127.0.0.1
+@port: 3000
+Content-type: application/json
+
+{
+"name": "mountain",
+      "duration": 6,
+      "maxGroupSize": 15,
+      "difficulty": "easy",
+      "ratingsAverage": 4.8,
+      "ratingsQuantity": 23,
+      "price": 450,
+      "summary": "Exploring the jaw-dropping US east coast by foot and by boat",
+      "description": "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nIrure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "imageCover": "tour-2-cover.jpg",
+      "images": [
+         "tour-2-1.jpg",
+         "tour-2-2.jpg",
+         "tour-2-3.jpg"
+      ],
+      "startDates": [
+         "2021-06-19,10:00",
+         "2021-07-20,10:00",
+         "2021-08-18,10:00"
+      ]
+}
+
+### Get All Tours 
+# Filtering 
+# ?duration[gte]=5&difficulty=easy&price[lte]=400
+GET /api/v1/tours
+@host: 127.0.0.1
+@port: 3000
+
+### Get tour By Id
+GET /api/v1/tours/66e4aeaaf24260e43a8d337b
+@host: 127.0.0.1
+@port: 3000
+
+### Update Tour
+PATCH /api/v1/tours/66e4aeaaf24260e43a8d337b
+@host: 127.0.0.1
+@port: 3000
+Content-type: application/json
+
+{
+	"name": "Mountain silver",
+	"price": 325
+}
+
+### Delete Tour
+DELETE /api/v1/tours/66e5920ae1062484e582664b
+@host: 127.0.0.1
+@port: 3000
