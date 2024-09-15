@@ -3,7 +3,7 @@ const _ = require('lodash')
 
 // Models
 const Tour = require('../models/tourModel.js')
-const { request } = require('express')
+const { request, response } = require('express')
 
 // Main controller object
 const tourCtrl = {}
@@ -25,6 +25,16 @@ tourCtrl.check = (req, res, next) => {
 			message: 'Name and price are required!.',
 		})
 	}
+	next()
+}
+
+/** 
+	aliasTop5Cheap (Setting queries)
+ */
+tourCtrl.aliasTop5Cheap = (req = request, res = response, next) => {
+	req.query.sort = '-ratingAverage,price'
+	req.query.limit = 5
+	req.query.fields = 'name,price,summary,difficulty,ratingAverage'
 	next()
 }
 
@@ -75,6 +85,7 @@ tourCtrl.getAllToursCtrl = async (req = request, res, next) => {
 		}
 
 		// 5. Execute query
+		// console.log(req.query)
 		const tours = await query
 
 		// 6. Send response

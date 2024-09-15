@@ -14,7 +14,7 @@ Content-type: application/json
 # ?sort=-price,ratingAverage
 # Selecting Fields
 #?fields=name,duration,price
-GET /api/v1/tours?fields=name,duration,price
+GET /api/v1/tours?sort=-ratingsAverage
 @host: 127.0.0.1
 @port: 3000
 
@@ -24,14 +24,13 @@ GET /api/v1/tours/66e4aeaaf24260e43a8d337b
 @port: 3000
 
 ### Update Tour
-PATCH /api/v1/tours/66e4aeaaf24260e43a8d337b
+PATCH /api/v1/tours/66e6259023e4740ef7bff634
 @host: 127.0.0.1
 @port: 3000
 Content-type: application/json
 
 {
-	"name": "Mountain silver",
-	"price": 325
+	"ratingAverage": 4.5
 }
 
 ### Delete Tour

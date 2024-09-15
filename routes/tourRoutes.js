@@ -7,6 +7,10 @@ const tourCtrl = require('../controllers/tourController.js')
 tourRoutes.param('id', tourCtrl.checkId)
 
 tourRoutes
+	.route('/top-5-cheap')
+	.get(tourCtrl.aliasTop5Cheap, tourCtrl.getAllToursCtrl)
+
+tourRoutes
 	.route('/')
 	.get(tourCtrl.getAllToursCtrl)
 	.post(tourCtrl.check, tourCtrl.createTourCtrl)
