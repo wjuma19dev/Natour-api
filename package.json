@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "start": "nodemon server.js"
+        "start": "nodemon server.js",
+        "import": "node dev-data/data/manage-dev-data.js --import",
+        "drop": "node dev-data/data/manage-dev-data.js --drop"
     },
     "keywords": [],
     "author": "",

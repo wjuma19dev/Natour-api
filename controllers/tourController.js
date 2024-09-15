@@ -32,23 +32,52 @@ tourCtrl.check = (req, res, next) => {
 	getAllToursCtrl
  */
 tourCtrl.getAllToursCtrl = async (req = request, res, next) => {
-	// 1. Filtering
-	const queriesObj = req.query
-	const excludeQueries = ['page', 'sort', 'limit', 'fields']
-	excludeQueries.forEach((el) => delete queriesObj[el])
-
-	// 2. Resolve { gte: 5 } change to { $gte: 5 } for valid mongoose operator
-	let queryStr = JSON.stringify(queriesObj)
-	queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
-	console.log(JSON.parse(queryStr))
-
-	// 3. Query
-	const query = Tour.find(JSON.parse(queryStr))
-
 	try {
-		// 4. Execute query
+		// 1A. Filtering
+		const queriesObj = { ...req.query }
+		const excludeQueries = ['page', 'sort', 'limit', 'fields']
+		excludeQueries.forEach((el) => delete queriesObj[el])
+
+		// 1B. Resolve { gte: 5 } change to { $gte: 5 } for valid mongoose operator
+		let queryStr = JSON.stringify(queriesObj)
+		queryStr = queryStr.replace(
+			/\b(gte|gt|lte|lt)\b/g,
+			(match) => `$${match}`
+		)
+
+		let query = Tour.find(JSON.parse(queryStr))
+
+		// 2A Sorting by price and ratingAverage
+		if (req.query.sort) {
+			const sortBy = req.query.sort.split(',').join(' ')
+			query = query.sort(sortBy)
+		} else {
+			// By default solting by createAt
+			query = query.sort('-createdAt')
+		}
+
+		// 3A Field limited
+		if (req.query.fields) {
+			const fields = req.query.fields.split(',').join(' ')
+			query = query.select(fields)
+		} else {
+			query = query.select('-__v')
+		}
+
+		// 4A. Pagination
+		const page = req.query.page * 1 || 1
+		const limit = req.query.limit * 1 || 3
+		const skip = (page - 1) * limit
+		query = query.skip(skip).limit(limit)
+		if (req.query.page) {
+			const toursCount = await Tour.countDocuments()
+			if (skip >= toursCount) throw Error('Page not found')
+		}
+
+		// 5. Execute query
 		const tours = await query
-		// 5. Send response
+
+		// 6. Send response
 		res.json({
 			status: 'success',
 			results: tours.length,
